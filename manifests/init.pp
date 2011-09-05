@@ -1,6 +1,6 @@
 class unbound(
   $interface = hiera('unbound_interface',''),
-  $acls = hiera('unbound_acls',{})
+  $acls = hiera('unbound_acls','')
 ){
   include unbound::base
     
