@@ -1,4 +1,4 @@
-class unbound::conf(
+define unbound::conf(
   $ensure = present,
   $content = 'absent',
   $source = 'absent'
