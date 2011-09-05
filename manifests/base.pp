@@ -23,7 +23,7 @@ class unbound::base {
   }
   File['/etc/unbound/unbound.conf','/etc/unbound/conf.d',
        '/etc/unbound/conf.d/includes.conf',
-       '/etc/unbound/conf.d/server_acl.conf',
+       '/etc/unbound/conf.d/server_acls.conf',
        '/etc/unbound/conf.d/server_interface.conf']{
     require => Package['unbound'],
     notify => Service['unbound'],
