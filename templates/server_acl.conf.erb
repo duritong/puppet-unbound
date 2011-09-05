@@ -1,0 +1,3 @@
+<% (scope.lookupvar('unbound::acls')||{}).each do |net, action| -%>
+access-control: <% "#{net} #{action}" %>
+<% end -%>
