@@ -30,6 +30,13 @@ class unbound::base {
     owner => root, group => 0, mode => 0644
   }
 
+  unbound::conf{'local_data':
+    source => [ "puppet:///modules/site-unbound/${fqdn}/config/conf.d/local_data.conf",
+                "puppet:///modules/site-unbound/${domain}/config/conf.d/local_data.conf",
+                'puppet:///modules/site-unbound/config/conf.d/local_data.conf',
+                'puppet:///modules/unbound/config/conf.d/local_data.conf' ]
+  }
+
   service{'unbound':
     enable => true,
     ensure => running,
