@@ -18,12 +18,12 @@ class unbound::base {
     '/etc/unbound/conf.d/server_interface.conf':
       content => $unbound::interface ? {
         '' => '',
-        default => "interface: $unbound::interface\n"
+        default => "interface: ${unbound::interface}\n"
       };
     '/etc/unbound/conf.d/local_data.conf':
-      source => [ "puppet:///modules/site-unbound/${fqdn}/config/conf.d/local_data.conf",
-                  "puppet:///modules/site-unbound/${domain}/config/conf.d/local_data.conf",
-                  'puppet:///modules/site-unbound/config/conf.d/local_data.conf',
+      source => [ "puppet:///modules/site_unbound/${::fqdn}/config/conf.d/local_data.conf",
+                  "puppet:///modules/site_unbound/${::domain}/config/conf.d/local_data.conf",
+                  'puppet:///modules/site_unbound/config/conf.d/local_data.conf',
                   'puppet:///modules/unbound/config/conf.d/local_data.conf' ];
   }
   File['/etc/unbound/unbound.conf','/etc/unbound/conf.d',
@@ -39,5 +39,5 @@ class unbound::base {
   service{'unbound':
     enable => true,
     ensure => running,
-  } 
+  }
 }
