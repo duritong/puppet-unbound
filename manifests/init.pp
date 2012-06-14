@@ -1,13 +1,15 @@
 class unbound(
-  $interface = hiera('unbound_interface',''),
-  $acls = hiera('unbound_acls','')
+  $interface = '',
+  $acls = '',
+  $manage_munin = false,
+  $manage_shorewall = false
 ){
   include unbound::base
     
-  if hiera('use_munin',false) {
+  if $manage_munin {
     include unbound::munin
   }
-  if hiera('use_shorewall',false) {
+  if $manage_shorewall {
     include shorewall::rules::dns
   }
 }
