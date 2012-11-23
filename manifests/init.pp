@@ -3,7 +3,7 @@ class unbound(
   $acls = '',
   $manage_munin = false,
   $manage_shorewall = false,
-  $nagios_test_domains = 'absent'
+  $nagios_test_domain = 'absent'
 ){
   include unbound::base
     
@@ -15,9 +15,9 @@ class unbound(
   }
   if $nagios_test_domains != 'absent' {
     nagios::service::dns{
-      $nagios_test_domains:
-        comment => 'unbound',
-        ip      => $unbound::interface ? {
+      "unbound_${nagios_test_domain}":
+        check_domain  => $nagios_test_domain,
+        ip            => $unbound::interface ? {
           ''      => $::ipaddress,
           default => $unbound::interface
         }
