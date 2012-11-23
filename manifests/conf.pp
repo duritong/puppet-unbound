@@ -18,7 +18,7 @@ define unbound::conf(
     }
   }
 
-  line{"${name}_unbound_include":
+  file_line{"${name}_unbound_include":
     line => "Include: /etc/unbound/conf.d/${name}.conf",
     file => "/etc/unbound/conf.d/includes.conf",
     ensure => $ensure,
