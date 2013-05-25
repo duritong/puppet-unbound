@@ -17,7 +17,6 @@ class unbound(
   $nagios_test_domain = 'absent'
 ){
   case $::operatingsystem {
-    centos: { include unbound::centos }
     default: { include unbound::base }
   }
 
