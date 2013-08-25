@@ -1,0 +1,19 @@
+# Unbound configuration file for Debian.
+#
+# See the unbound.conf(5) man page.
+#
+# See /usr/share/doc/unbound/examples/unbound.conf for a commented
+# reference config file.
+
+server:
+    # The following line will configure unbound to perform cryptographic
+    # DNSSEC validation using the root trust anchor.
+    auto-trust-anchor-file: "/var/lib/unbound/root.key"
+    Include: /etc/unbound/conf.d/server_interface.conf
+  
+    Include: /etc/unbound/conf.d/server_acls.conf
+
+    Include: /etc/unbound/conf.d/local_data.conf
+
+Include: /etc/unbound/conf.d/includes.conf
+
