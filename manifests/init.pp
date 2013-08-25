@@ -20,7 +20,8 @@ class unbound(
     default: { include unbound::base }
   }
 
-  if $manage_munin {
+  # debian is currently not supported for munin plugins
+  if $manage_munin and $::operatingsystem != 'Debian' {
     include unbound::munin
   }
   if $manage_shorewall {
