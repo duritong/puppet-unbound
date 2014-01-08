@@ -27,10 +27,7 @@ class unbound::base {
     '/etc/unbound/conf.d/server_interface.conf':
       content => $unbound_interface;
     '/etc/unbound/conf.d/local_data.conf':
-      source => [ "puppet:///modules/site_unbound/${::fqdn}/config/conf.d/local_data.conf",
-                  "puppet:///modules/site_unbound/${::domain}/config/conf.d/local_data.conf",
-                  'puppet:///modules/site_unbound/config/conf.d/local_data.conf',
-                  'puppet:///modules/unbound/config/conf.d/local_data.conf' ];
+      source => $unbound::local_data_source;
   }
   File['/etc/unbound/unbound.conf','/etc/unbound/conf.d',
         '/etc/unbound/conf.d/includes.conf',

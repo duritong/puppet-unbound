@@ -9,12 +9,17 @@
 #  * nagios_test_domain: Export nagios tests to check if the domain
 #                        passed in this parameter resolves?
 #                        Default: 'absent' == No nagios checks
+#  * local_data_source: from where to fetch the local data file
 class unbound(
-  $interface = '',
-  $acls = '',
-  $manage_munin = false,
-  $manage_shorewall = false,
-  $nagios_test_domain = 'absent'
+  $interface          = '',
+  $acls               = '',
+  $manage_munin       = false,
+  $manage_shorewall   = false,
+  $nagios_test_domain = 'absent',
+  $local_data_source  = [ "puppet:///modules/site_unbound/${::fqdn}/config/conf.d/local_data.conf",
+                          "puppet:///modules/site_unbound/${::domain}/config/conf.d/local_data.conf",
+                          'puppet:///modules/site_unbound/config/conf.d/local_data.conf',
+                          'puppet:///modules/unbound/config/conf.d/local_data.conf' ],
 ){
   case $::operatingsystem {
     default: { include unbound::base }
