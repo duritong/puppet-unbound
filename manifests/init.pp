@@ -16,6 +16,8 @@ class unbound(
   $manage_munin       = false,
   $manage_shorewall   = false,
   $nagios_test_domain = 'absent',
+  $local_zones      = {},
+  $forward_zones    = {},
   $local_data_source  = [ "puppet:///modules/site_unbound/${::fqdn}/config/conf.d/local_data.conf",
                           "puppet:///modules/site_unbound/${::domain}/config/conf.d/local_data.conf",
                           'puppet:///modules/site_unbound/config/conf.d/local_data.conf',
@@ -39,6 +41,21 @@ class unbound(
       "unbound_${nagios_test_domain}":
         check_domain => $nagios_test_domain,
         ip           => $ip,
+    }
+  }
+
+  if !empty($local_zones) {
+    $lzs = keys($local_zones)
+    unbound::local_zones{
+      $lzs:
+        values => $local_zones;
+    }
+  }
+  if !empty($forward_zones) {
+    $fzs = keys($forward_zones)
+    unbound::forward_zones{
+      $fzs:
+        values => $forward_zones;
     }
   }
 }

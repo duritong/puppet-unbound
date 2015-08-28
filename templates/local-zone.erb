@@ -1,0 +1,7 @@
+local-zone: "<%= @name %>." redirect
+
+<% @values.keys.sort.each do |domain|
+  Array(@values[domain]).sort.each do |ip| -%>
+local-data: "<%= domain %>. IN A <%= ip %>"
+<% end
+end -%>

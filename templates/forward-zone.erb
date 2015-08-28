@@ -1,0 +1,11 @@
+forward-zone:
+  name: "<%= (@name == 'default') ? '.' : @name %>"
+<% @hosts.each do |host| -%>
+  forward-host: <%= host %>
+<% end -%>
+<% @addrs.each do |addr| -%>
+  forward-addr: <%= addr %>
+<% end
+if @first -%>
+  forward-first: <%= @first %>
+<% end -%>
