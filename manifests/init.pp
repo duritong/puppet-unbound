@@ -21,9 +21,7 @@ class unbound(
                           'puppet:///modules/site_unbound/config/conf.d/local_data.conf',
                           'puppet:///modules/unbound/config/conf.d/local_data.conf' ],
 ){
-  case $::operatingsystem {
-    default: { include unbound::base }
-  }
+  include unbound::base
 
   # debian is currently not supported for munin plugins
   if $manage_munin and $::operatingsystem != 'Debian' {
@@ -39,8 +37,8 @@ class unbound(
     }
     nagios::service::dns{
       "unbound_${nagios_test_domain}":
-        check_domain  => $nagios_test_domain,
-        ip            => $ip,
+        check_domain => $nagios_test_domain,
+        ip           => $ip,
     }
   }
 }
