@@ -4,8 +4,8 @@ class unbound::base {
     ensure => present,
   }
 
-  $unbound_interface = $unbound::interface ? {
-    ''      => '',
+  $unbound_interface_str = $unbound::interface ? {
+    'all'   => '',
     default => "interface: ${unbound::interface}\n"
   }
 
@@ -25,7 +25,7 @@ class unbound::base {
     '/etc/unbound/conf.d/server_acls.conf':
       content => template('unbound/server_acls.conf.erb');
     '/etc/unbound/conf.d/server_interface.conf':
-      content => $unbound_interface;
+      content => $unbound_interface_str;
     '/etc/unbound/conf.d/local_data.conf':
       source  => $unbound::local_data_source;
   }
@@ -38,7 +38,7 @@ class unbound::base {
     notify  => Service['unbound'],
     owner   => root,
     group   => 0,
-    mode    => 0644
+    mode    => '0644';
   }
 
   service{'unbound':

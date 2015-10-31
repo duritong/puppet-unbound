@@ -11,31 +11,31 @@
 #                        Default: 'absent' == No nagios checks
 #  * local_data_source: from where to fetch the local data file
 class unbound(
-  $interface          = '',
-  $acls               = '',
+  $interface          = 'all',
+  $acls               = {},
   $manage_munin       = false,
   $manage_shorewall   = false,
   $nagios_test_domain = 'absent',
-  $local_zones      = {},
-  $forward_zones    = {},
+  $local_zones        = {},
+  $forward_zones      = {},
   $local_data_source  = [ "puppet:///modules/site_unbound/${::fqdn}/config/conf.d/local_data.conf",
                           "puppet:///modules/site_unbound/${::domain}/config/conf.d/local_data.conf",
                           'puppet:///modules/site_unbound/config/conf.d/local_data.conf',
                           'puppet:///modules/unbound/config/conf.d/local_data.conf' ],
 ){
-  include unbound::base
+  include ::unbound::base
 
   # debian is currently not supported for munin plugins
   if $manage_munin and $::operatingsystem != 'Debian' {
-    include unbound::munin
+    include ::unbound::munin
   }
   if $manage_shorewall {
-    include shorewall::rules::dns
+    include ::shorewall::rules::dns
   }
   if $nagios_test_domain != 'absent' {
-    $ip = $unbound::interface ? {
-            ''      => $::ipaddress,
-            default => $unbound::interface
+    $ip = $interface ? {
+            'all'   => $::ipaddress,
+            default => $interface
     }
     nagios::service::dns{
       "unbound_${nagios_test_domain}":
