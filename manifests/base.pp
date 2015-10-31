@@ -12,6 +12,7 @@ class unbound::base {
   file{
     '/etc/unbound/unbound.conf':
       source  => [
+        "puppet:///modules/unbound/config/unbound.conf.${::operatingsystem}.${::operatingsystemmajrelease}",
         "puppet:///modules/unbound/config/unbound.conf.${::operatingsystem}",
         'puppet:///modules/unbound/config/unbound.conf',
       ];
