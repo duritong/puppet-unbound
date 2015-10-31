@@ -38,7 +38,7 @@ class unbound::base {
     notify  => Service['unbound'],
     owner   => root,
     group   => 0,
-    mode    => '0644';
+    mode    => '0644',
   }
 
   service{'unbound':
