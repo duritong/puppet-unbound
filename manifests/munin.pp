@@ -2,6 +2,7 @@
 class unbound::munin {
   package{'unbound-munin':
     ensure => present,
+    before => File['/etc/munin/plugin-conf.d'],
   }
 
   munin::plugin{ [  'unbound_munin_by_class', 'unbound_munin_by_flags',
