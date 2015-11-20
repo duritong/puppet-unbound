@@ -1,0 +1,10 @@
+module munin-unbound 1.0;
+
+require {
+  type system_munin_plugin_t;
+  type named_exec_t;
+  class file { execute getattr };
+}
+
+#============= system_munin_plugin_t ==============
+allow system_munin_plugin_t named_exec_t:file { execute getattr };

@@ -19,4 +19,13 @@ env.spoof_crit 100000
 ",
     require => Package['unbound-munin'],
   }
+
+  if str2bool($::selinux) and (versioncmp($::operatingsystemmajrelease, '6') > 0) {
+    selinux::policy{
+      'munin-unbound':
+        te_source => 'puppet:///modules/unbound/selinux/munin-unbound.te',
+        require   => Package['unbound-munin'],
+        before    => Service['munin-node'],
+    }
+  }
 }
