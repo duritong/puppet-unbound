@@ -1,6 +1,15 @@
 require File.expand_path(File.join(File.dirname(__FILE__),'../spec_helper'))
 
 describe 'unbound::conf', :type => 'define' do
+  let(:pre_condition) {
+    'include unbound'
+  }
+  let(:facts){
+    {
+      operatingsystem: 'CentOS',
+      operatingsystemmajrelease: '7'
+    }
+  }
   context "without content" do
     let(:title) { 'test.com' }
     it { expect { should compile }.to raise_error(/Must define content/) }
@@ -44,7 +53,7 @@ describe 'unbound::conf', :type => 'define' do
     )}
     it { should contain_file_line("#{title}_unbound_include").with(
       :ensure => 'absent',
-      :line   => "Include: /etc/unbound/conf.d/#{title}.conf",
+      :line   => "include: /etc/unbound/conf.d/#{title}.conf",
       :path   => '/etc/unbound/conf.d/includes.conf',
       :notify => 'Service[unbound]',
     )}

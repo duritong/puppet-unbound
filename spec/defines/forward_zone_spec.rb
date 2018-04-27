@@ -1,6 +1,15 @@
 require File.expand_path(File.join(File.dirname(__FILE__),'../spec_helper'))
 
 describe 'unbound::forward_zone', :type => 'define' do
+  let(:pre_condition) {
+    'include unbound'
+  }
+  let(:facts){
+    {
+      operatingsystem: 'CentOS',
+      operatingsystemmajrelease: '7'
+    }
+  }
   context "without addrs" do
     let(:title) { 'test.com' }
     it { expect { should compile }.to raise_error(/requires addrs or hosts/) }

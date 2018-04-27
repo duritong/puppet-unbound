@@ -1,6 +1,15 @@
 require File.expand_path(File.join(File.dirname(__FILE__),'../spec_helper'))
 
 describe 'unbound::local_zone', :type => 'define' do
+  let(:pre_condition) {
+    'include unbound'
+  }
+  let(:facts){
+    {
+      operatingsystem: 'CentOS',
+      operatingsystemmajrelease: '7'
+    }
+  }
   let(:title) { 'test.com' }
   context "with default_values" do
     let(:params) {
