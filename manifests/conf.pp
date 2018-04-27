@@ -29,7 +29,7 @@ define unbound::conf(
 
   file_line{"${name}_unbound_include":
     ensure => $ensure,
-    line   => "Include: /etc/unbound/conf.d/${name}.conf",
+    line   => "include: /etc/unbound/conf.d/${name}.conf",
     path   => '/etc/unbound/conf.d/includes.conf',
     notify => Service['unbound'],
   }

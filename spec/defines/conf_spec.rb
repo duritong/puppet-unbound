@@ -22,7 +22,7 @@ describe 'unbound::conf', :type => 'define' do
     it { should contain_file("/etc/unbound/conf.d/#{title}.conf").with_content('content') }
     it { should contain_file_line("#{title}_unbound_include").with(
       :ensure => 'present',
-      :line   => "Include: /etc/unbound/conf.d/#{title}.conf",
+      :line   => "include: /etc/unbound/conf.d/#{title}.conf",
       :path   => '/etc/unbound/conf.d/includes.conf',
       :notify => 'Service[unbound]',
     )}
