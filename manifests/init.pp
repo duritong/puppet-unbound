@@ -11,17 +11,18 @@
 #                        Default: 'absent' == No nagios checks
 #  * local_data_source: from where to fetch the local data file
 class unbound(
-  $interface          = 'all',
-  $acls               = {},
-  $manage_munin       = false,
-  $manage_shorewall   = false,
-  $nagios_test_domain = 'absent',
-  $local_zones        = {},
-  $forward_zones      = {},
-  $local_data_source  = [ "puppet:///modules/site_unbound/${::fqdn}/config/conf.d/local_data.conf",
-                          "puppet:///modules/site_unbound/${::domain}/config/conf.d/local_data.conf",
-                          'puppet:///modules/site_unbound/config/conf.d/local_data.conf',
-                          'puppet:///modules/unbound/config/conf.d/local_data.conf' ],
+  String[2] $interface          = 'all',
+  Hash      $acls               = {},
+  Boolean   $manage_munin       = false,
+  Boolean   $manage_shorewall   = false,
+  String[1] $nagios_test_domain = 'absent',
+  Hash      $local_zones        = {},
+  Hash      $forward_zones      = {},
+  Enum[Array[String[1]],String[1]]
+            $local_data_source  = [ "puppet:///modules/site_unbound/${::fqdn}/config/conf.d/local_data.conf",
+                                    "puppet:///modules/site_unbound/${::domain}/config/conf.d/local_data.conf",
+                                    'puppet:///modules/site_unbound/config/conf.d/local_data.conf',
+                                    'puppet:///modules/unbound/config/conf.d/local_data.conf' ],
 ){
   include ::unbound::base
 
@@ -34,7 +35,7 @@ class unbound(
   }
   if $nagios_test_domain != 'absent' {
     $ip = $interface ? {
-            'all'   => pick($default_ipaddress,$ipaddress),
+            'all'   => pick($facts['default_ipaddress'],$facts['ipaddress']),
             default => $interface
     }
     nagios::service::dns{
