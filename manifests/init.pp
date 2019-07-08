@@ -18,7 +18,7 @@ class unbound(
   String[1] $nagios_test_domain = 'absent',
   Hash      $local_zones        = {},
   Hash      $forward_zones      = {},
-  Enum[Array[String[1]],String[1]]
+  Variant[Array[String[1]],String[1]]
             $local_data_source  = [ "puppet:///modules/site_unbound/${::fqdn}/config/conf.d/local_data.conf",
                                     "puppet:///modules/site_unbound/${::domain}/config/conf.d/local_data.conf",
                                     'puppet:///modules/site_unbound/config/conf.d/local_data.conf',
