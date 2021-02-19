@@ -8,19 +8,16 @@ require {
   type rndc_port_t;
   class process { siginh noatsecure rlimitinh };
   class tcp_socket { write read create name_connect connect };
-  class file { execute read execute_no_trans getattr open map };
+  class file { execute read execute_no_trans getattr open };
 }
 
 #============= munin_t ==============
 allow munin_t system_munin_plugin_t:process { siginh rlimitinh noatsecure };
 
 #============= system_munin_plugin_t ==============
-allow system_munin_plugin_t cert_t:file { getattr open read };
-
 allow system_munin_plugin_t dnssec_t:file { read getattr open };
 
-allow system_munin_plugin_t named_exec_t:file { read execute open getattr execute_no_trans map };
-allow system_munin_plugin_t named_var_run_t:file { getattr open read };
+allow system_munin_plugin_t named_exec_t:file { read execute open getattr execute_no_trans };
 allow system_munin_plugin_t rndc_port_t:tcp_socket name_connect;
 allow system_munin_plugin_t self:tcp_socket { create connect write read };
 
