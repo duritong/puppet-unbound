@@ -3,6 +3,7 @@ module munin-unbound 1.2;
 require {
   type dnssec_t;
   type system_munin_plugin_t;
+  type cert_t;
   type named_exec_t;
   type munin_t;
   type rndc_port_t;
