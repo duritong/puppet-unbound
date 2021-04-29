@@ -35,7 +35,7 @@ class unbound (
   }
   if $nagios_test_domain != 'absent' {
     $ip = $interface ? {
-      'all'   => pick($facts['default_ipaddress'],$facts['networking']['ip']),
+      'all'   => $facts['networking']['ip'],
       default => $interface
     }
     nagios::service::dns {
