@@ -11,7 +11,7 @@
 #                        Default: 'absent' == No nagios checks
 #  * local_data_source: from where to fetch the local data file
 class unbound (
-  String[2] $interface          = 'all',
+  Variant[String[2],Array[String[2],1]] $interface = 'all',
   Hash      $acls               = {},
   Boolean   $manage_munin       = false,
   Boolean   $manage_firewall    = false,
