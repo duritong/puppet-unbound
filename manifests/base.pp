@@ -1,6 +1,6 @@
 # setup all necessary stuff for unbound
 class unbound::base {
-  package{'unbound':
+  package { 'unbound':
     ensure => present,
   }
 
@@ -9,11 +9,11 @@ class unbound::base {
     default => "interface: ${unbound::interface}\n"
   }
 
-  file{
+  file {
     '/etc/unbound/unbound.conf':
       source  => [
-        "puppet:///modules/unbound/config/unbound.conf.${::operatingsystem}.${::operatingsystemmajrelease}",
-        "puppet:///modules/unbound/config/unbound.conf.${::operatingsystem}",
+        "puppet:///modules/unbound/config/unbound.conf.${facts['os']['name']}.${facts['os']['release']['major']}",
+        "puppet:///modules/unbound/config/unbound.conf.${facts['os']['name']}",
         'puppet:///modules/unbound/config/unbound.conf',
       ];
     '/etc/unbound/conf.d':
@@ -22,7 +22,7 @@ class unbound::base {
       force   => true,
       recurse => true;
     '/etc/unbound/conf.d/includes.conf':
-      ensure  => present;
+      ensure  => file;
     '/etc/unbound/conf.d/server_acls.conf':
       content => template('unbound/server_acls.conf.erb');
     '/etc/unbound/conf.d/server_interface.conf':
@@ -31,10 +31,10 @@ class unbound::base {
       source  => $unbound::local_data_source;
   }
   File['/etc/unbound/unbound.conf','/etc/unbound/conf.d',
-        '/etc/unbound/conf.d/includes.conf',
-        '/etc/unbound/conf.d/server_acls.conf',
-        '/etc/unbound/conf.d/local_data.conf',
-        '/etc/unbound/conf.d/server_interface.conf']{
+    '/etc/unbound/conf.d/includes.conf',
+    '/etc/unbound/conf.d/server_acls.conf',
+    '/etc/unbound/conf.d/local_data.conf',
+  '/etc/unbound/conf.d/server_interface.conf'] {
     require => Package['unbound'],
     notify  => Service['unbound'],
     owner   => root,
@@ -42,7 +42,7 @@ class unbound::base {
     mode    => '0644',
   }
 
-  service{'unbound':
+  service { 'unbound':
     ensure => running,
     enable => true,
   }

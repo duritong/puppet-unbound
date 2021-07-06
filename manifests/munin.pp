@@ -7,8 +7,8 @@ class unbound::munin {
       'unbound_munin_by_opcode', 'unbound_munin_by_rcode',
       'unbound_munin_by_type', 'unbound_munin_histogram',
       'unbound_munin_hits', 'unbound_munin_memory',
-      'unbound_munin_queue']:
-    config  => "user root
+    'unbound_munin_queue']:
+      config  => "user root
 env.statefile /var/lib/munin/plugin-state/unbound-state
 env.unbound_conf /etc/unbound/unbound.conf
 env.unbound_control /usr/sbin/unbound-control
@@ -20,7 +20,7 @@ env.spoof_crit 100000
   selinux::policy {
     'munin-unbound':
       te_source => ["puppet:///modules/unbound/selinux/${facts['os']['name']}.${facts['os']['release']['major']}/munin-unbound.te",
-        'puppet:///modules/unbound/selinux/munin-unbound.te',],
+      'puppet:///modules/unbound/selinux/munin-unbound.te',],
       require   => Package['unbound-munin'],
       before    => Service['munin-node'],
   }
