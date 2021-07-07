@@ -34,14 +34,16 @@ class unbound (
     include firewall::rules::dns
   }
   if $nagios_test_domain != 'absent' {
-    $ip = $interface ? {
-      'all'   => $facts['networking']['ip'],
-      default => $interface
-    }
-    nagios::service::dns {
-      "unbound_${nagios_test_domain}":
-        check_domain => $nagios_test_domain,
-        ip           => $ip,
+    Array($interface,true).each |$index,$int| {
+      $ip = $int ? {
+        'all'   => $facts['networking']['ip'],
+        default => $int
+      }
+      nagios::service::dns {
+        "unbound_${nagios_test_domain}_${index}":
+          check_domain => $nagios_test_domain,
+          ip           => $ip,
+      }
     }
   }
 
