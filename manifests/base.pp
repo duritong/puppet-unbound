@@ -6,7 +6,7 @@ class unbound::base {
 
   $unbound_interface_str = $unbound::interface ? {
     'all'   => '',
-    default => "${Array($unbound::interface,true).map |$i| { "interface: ${i}" }.join("\n")}\n",
+    default => "${Array($unbound::interface,true).filter |$i| { $i !~ String[1] }.map |$i| { "interface: ${i}" }.join("\n")}\n",
   }
 
   file {
