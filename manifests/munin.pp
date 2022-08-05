@@ -9,7 +9,7 @@ class unbound::munin {
       'unbound_munin_hits', 'unbound_munin_memory',
     'unbound_munin_queue']:
       config  => "user root
-env.statefile /var/lib/munin/plugin-state/unbound-state
+env.statefile /var/lib/munin-node/plugin-state/unbound-state
 env.unbound_conf /etc/unbound/unbound.conf
 env.unbound_control /usr/sbin/unbound-control
 env.spoof_warn 1000
